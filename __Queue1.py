@@ -33,10 +33,10 @@ print(q.isEmpty())
 
 print(q.size())
 
-print(q.deQueue()) #เอาคิวออก
-print(q.items)
-print(q.deQueue())
-print(q.items)
-print(q.deQueue())
-print(q.items)
-print(q.isEmpty())
+# print(q.deQueue()) #เอาคิวออก
+# print(q.items)
+# print(q.deQueue())
+# print(q.items)
+# print(q.deQueue())
+# print(q.items)
+# print(q.isEmpty())
