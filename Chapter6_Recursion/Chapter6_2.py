@@ -1,16 +1,15 @@
-def reverse(l):
-    if len(l) == 0: 
-        return []
-    else : 
-        return [l.pop()] + reverse(l)
+def quick_sort_MaxToMin(l):
+    return l if len(l) <= 1 \
+            else    quick_sort_MaxToMin([e for e in l[1:] if int(e) >= int(l[0])]) + \
+                    [l[0]] + \
+                    quick_sort_MaxToMin([e for e in l[1:] if int(e) < int(l[0])])
 
-def recursive_sum(lst):
-    if not lst:
-        return 0
-    else:
-        return int(lst[0]) + recursive_sum(lst[1:])
+def quick_sort_MinToMax(l):
+    return l if len(l) <= 1 \
+            else    quick_sort_MinToMax([e for e in l[1:] if int(e) <= int(l[0])]) + \
+                    [l[0]] + \
+                    quick_sort_MinToMax([e for e in l[1:] if int(e) > int(l[0])])
 
-l = input("Enter your List : ").split(",")
-A = reverse(l)
-B = recursive_sum(A)
-print("List after Sorted :",B)
+if __name__=='__main__':
+    n = input('Enter your List : ').split(',')
+    print('List after Sorted : ['+', '.join(quick_sort_MaxToMin(n))+']')
