@@ -1,187 +1,100 @@
+### Class ###
 class Node:
-    def __init__(self, value):
-        self.value = value
-        self.next = None
-        self.previous = None
+    def __init__(self, data, prev=None, next=None):
+        self.data = data
+        self.prev = prev
+        self.next = next
 
-class LinkedList:
+class DoublyLinkedList:
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self.head = Node(None, None, None)
+        self.tail = Node(None, self.head, None)
+        self.head.next = self.tail
         self.size = 0
 
     def __str__(self):
-        if self.isEmpty():
-            return "Empty"
-        cur, s = self.head, str(self.head.value) + " "
-        while cur.next != None:
-            s += str(cur.next.value) + " "
-            cur = cur.next
-        return s
+        current = self.head.next
+        string = ""
+        while current is not self.tail:
+            string += str(current.data) + " "
+            current = current.next
 
-    def reverse(self):
-        if self.isEmpty():
-            return "Empty"
-        cur, s = self.tail, str(self.tail.value) + " "
-        while cur.previous != None:
-            s += str(cur.previous.value) + " "
-            cur = cur.previous
-        return s
+        if string == "":
+            return ""
+        else:
+            return "->".join(string.split())
+
+    def str_reverse(self):
+        current = self.tail.prev
+        string = ""
+        while current is not self.head:
+            string += str(current.data) + " "
+            current = current.prev
+
+        if string == "":
+            return ""
+        else:
+            return "->".join(string.split())
 
     def isEmpty(self):
         return self.size == 0
 
-    def append(self, item):
-        if self.isEmpty():
-            self.head = self.tail = Node(item)
+    def append(self, data):
+        newNode = Node(data, self.tail.prev, self.tail)
+        self.tail.prev.next = newNode
+        self.tail.prev = newNode
+        self.size += 1
+
+    def insert(self, pos, data):
+        if pos >= 0 and pos <= self.size:
+            current = self.head
+            for i in range(pos):
+                current = current.next
+            newNode = Node(data, current, current.next)
+            current.next.prev = newNode
+            current.next = newNode
             self.size += 1
-            return
-
-        new_tail = Node(item)
-        old_tail = self.tail
-
-        old_tail.next = new_tail
-        new_tail.previous = old_tail
-        
-        self.tail = new_tail
-        self.size += 1
-
-    def addHead(self, item):
-        if self.isEmpty():
-            self.head = self.tail = Node(item)
-            self.size += 1
-            return
-        
-        new_head = Node(item)
-        old_head = self.head
-
-        new_head.next = old_head
-        old_head.previous = new_head
-
-        self.head = new_head
-        self.size += 1
-
-    def insert(self, pos, item):
-
-        inserted_node = Node(item)
-        if pos == 0:
-            self.addHead(item)
-            return
-        if pos > 0:
-            if pos >= self.size - 1:
-                self.append(item)
-                return
-            else:
-                node = self.head
-                for _ in range(0,pos):
-                    node = node.next
-
-                previous_node = node
-                next_node = previous_node.next
-
-                previous_node.next = inserted_node
-                inserted_node.previous = previous_node
-
-                next_node.previous = inserted_node
-                inserted_node.next = next_node
         else:
-            if pos <= -self.size:
-                self.addHead(item)
-                return
-            else:
-                node = self.tail
-                for _ in range(-1, pos-1, -1):
-                    node = node.previous
+            print("Data cannot be added")
 
-                previous_node = node
-                next_node = previous_node.next
+    def remove(self, data):
+        try:
+            index = -1
+            current = self.head
+            while current.data != data:
+                index += 1
+                current = current.next
+            current.prev.next = current.next
+            current.next.prev = current.prev
+            self.size -= 1
+            print("removed : {} from index : {}".format(data, index))
+        except AttributeError:
+            print("Not Found!")
 
-                previous_node.next = inserted_node
-                inserted_node.previous = previous_node
+### Main ###
+commanList = input("Enter Input : ").split(',')
 
-                next_node.previous = inserted_node
-                inserted_node.next = next_node
+doublyLinkedList = DoublyLinkedList()
+for command in commanList:
+    option = command.split()[0]
+    if option == "A":
+        param = command.split()[1]
+        doublyLinkedList.append(param)
 
-        self.size += 1
+    elif option == "Ab":
+        param = command.split()[1]
+        doublyLinkedList.insert(0, param)
 
-    def search(self, item):
-        node = self.head
-        while node is not None:
-            if node.value == item:
-                return "Found"
-            node = node.next
-        return "Not Found"
+    elif option == "I":
+        param = command.split()[1]
+        position, data = param.split(':')
+        doublyLinkedList.insert(int(position), data)
+        if int(position) >= 0 and int(position) <= doublyLinkedList.size:
+            print("index = {} and data = {}".format(position, data))
 
-    def index(self, item):
-        index = 0
-        node = self.head
-        while node is not None:
-            if node.value == item:
-                return index
-            node = node.next
-            index += 1
-        return -1
+    elif option == "R":
+        param = command.split()[1]
+        doublyLinkedList.remove(param)
 
-    def size(self):
-        return self.size
-
-    def pop(self, pos):
-        if self.size-1 < pos or pos < 0:
-            return "Out of Range"
-
-        if self.size == 1:
-            self.head = None
-            self.tail = None
-
-        elif pos == 0:
-            print(f"l {self}")
-            print("size "+ str(self.size))
-            new_head = self.head.next
-            new_head.previous = None
-
-            self.head = new_head
-            
-        elif pos == self.size-1:
-            new_tail = self.tail.previous
-            new_tail.next = None
-
-            self.tail = new_tail
-
-        else:
-            node = self.head
-            for _ in range(0, pos):
-                node = node.next
-
-            previous_node = node.previous
-            next_node = node.next
-
-            if previous_node is not None:
-                previous_node.next = next_node
-                next_node.previous = previous_node
-
-        self.size -= 1
-
-        return "Success"
-
-L = LinkedList()
-inp = input('Enter Input : ').split(',')
-for i in inp:
-    if i[:2] == "AP":
-        L.append(i[3:])
-    elif i[:2] == "AH":
-        L.addHead(i[3:])
-    elif i[:2] == "SE":
-        print("{0} {1} in {2}".format(L.search(i[3:]), i[3:], L))
-    elif i[:2] == "SI":
-        print("Linked List size = {0} : {1}".format(L.size, L))
-    elif i[:2] == "ID":
-        print("Index ({0}) = {1} : {2}".format(i[3:], L.index(i[3:]), L))
-    elif i[:2] == "PO":
-        before = "{}".format(L)
-        k = L.pop(int(i[3:]))
-        print(("{0} | {1}-> {2}".format(k, before, L)) if k == "Success" else ("{0} | {1}".format(k, L)))
-    elif i[:2] == "IS":
-        data = i[3:].split()
-        L.insert(int(data[0]), data[1])
-print("Linked List :", L)
-print("Linked List Reverse :", L.reverse())
+    print("linked list : {}".format(doublyLinkedList))
+    print("reverse : {}".format(doublyLinkedList.str_reverse()))
