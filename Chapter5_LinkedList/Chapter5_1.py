@@ -63,18 +63,7 @@ class SinglyLinkedList:
         prevNode = self.nodeAt(index - 1)
         newNode = Node(data, prevNode.next)
         prevNode.next = newNode
-
-        # p.next = Node(data, p.next)   # shortcut
         self.size += 1
-
-    '''
-    def delete(self, data):
-        if self.isIn(data):
-            p = self.nodeAt(self.indexOf(data) - 1)
-            p.next = p.next.next
-            self.size -= 1
-    '''
-
 
 inp = input('Enter Input : ').split(',')
 
