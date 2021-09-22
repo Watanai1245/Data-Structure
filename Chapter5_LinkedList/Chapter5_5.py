@@ -50,8 +50,8 @@ class SinglyLinkedList:
     def isEmpty(self):
         return self.size() == 0
 
-    def nodeAt(self, index):  # -1 is dummy , 0 is first index
-        p = self.head  # dummy head
+    def nodeAt(self, index):
+        p = self.head
         for _ in range(-1, index):
             p = p.next
         return p
@@ -65,36 +65,34 @@ class SinglyLinkedList:
         self.insert(self.size(), data)
 
     def pop(self, index):
-        if self.isEmpty():  # check for case prevNode.next == None
+        if self.isEmpty():
             return 'No more to pop'
         if index > self.size() - 1:
             return 'out of range'
 
         prevNode = self.nodeAt(index - 1)
-        nextNode = prevNode.next.next  # no case None.next / but nextNode can be None
-        popNode = prevNode.next  # store popNode
+        nextNode = prevNode.next.next
+        popNode = prevNode.next
         prevNode.next = nextNode
-        return popNode  # return None or Node
+        return popNode
 
-# CAUTION! this is not a real radixSort...
-# it's sort inside it's own data.
 def radixSort(linkedList):
     state = False
     time = 0
     size = linkedList.size()
-    zeroLinked = SinglyLinkedList()     # I lazy to optimize code to array :P
-    oneLinked = SinglyLinkedList()      # make sure that programming has no bug for first time test
-    twoLinked = SinglyLinkedList()
-    threeLinked = SinglyLinkedList()
-    fourLinked = SinglyLinkedList()
-    fiveLinked = SinglyLinkedList()
-    sixLinked = SinglyLinkedList()
-    sevenLinked = SinglyLinkedList()
-    eightLinked = SinglyLinkedList()
-    nightLinked = SinglyLinkedList()
+    zeroL = SinglyLinkedList()
+    oneL = SinglyLinkedList()
+    twoL = SinglyLinkedList()
+    threeL = SinglyLinkedList()
+    fourL = SinglyLinkedList()
+    fiveL = SinglyLinkedList()
+    sixL = SinglyLinkedList()
+    sevenL = SinglyLinkedList()
+    eightL = SinglyLinkedList()
+    nightL = SinglyLinkedList()
 
-    for digit in range(1000):  # digit ones->tens->hundreds->...
-        for _ in range(size):  # size of LinkedList
+    for digit in range(1000):
+        for _ in range(size):
             popNode = linkedList.pop(0)
 
             originalData = popNode.data
@@ -104,63 +102,59 @@ def radixSort(linkedList):
                 calculatedData = -originalData // 10 ** digit
 
             if calculatedData % 10 == 0:
-                zeroLinked.checkMaxAndInsert(originalData)
+                zeroL.checkMaxAndInsert(originalData)
             elif calculatedData % 10 == 1:
-                oneLinked.checkMaxAndInsert(originalData)
+                oneL.checkMaxAndInsert(originalData)
             elif calculatedData % 10 == 2:
-                twoLinked.checkMaxAndInsert(originalData)
+                twoL.checkMaxAndInsert(originalData)
             elif calculatedData % 10 == 3:
-                threeLinked.checkMaxAndInsert(originalData)
+                threeL.checkMaxAndInsert(originalData)
             elif calculatedData % 10 == 4:
-                fourLinked.checkMaxAndInsert(originalData)
+                fourL.checkMaxAndInsert(originalData)
             elif calculatedData % 10 == 5:
-                fiveLinked.checkMaxAndInsert(originalData)
+                fiveL.checkMaxAndInsert(originalData)
             elif calculatedData % 10 == 6:
-                sixLinked.checkMaxAndInsert(originalData)
+                sixL.checkMaxAndInsert(originalData)
             elif calculatedData % 10 == 7:
-                sevenLinked.checkMaxAndInsert(originalData)
+                sevenL.checkMaxAndInsert(originalData)
             elif calculatedData % 10 == 8:
-                eightLinked.checkMaxAndInsert(originalData)
+                eightL.checkMaxAndInsert(originalData)
             elif calculatedData % 10 == 9:
-                nightLinked.checkMaxAndInsert(originalData)
+                nightL.checkMaxAndInsert(originalData)
 
         print('------------------------------------------------------------')
         print('Round :', digit + 1)
-        print('0 :', zeroLinked.display())
-        print('1 :', oneLinked.display())
-        print('2 :', twoLinked.display())
-        print('3 :', threeLinked.display())
-        print('4 :', fourLinked.display())
-        print('5 :', fiveLinked.display())
-        print('6 :', sixLinked.display())
-        print('7 :', sevenLinked.display())
-        print('8 :', eightLinked.display())
-        print('9 :', nightLinked.display())
+        print('0 :', zeroL.display())
+        print('1 :', oneL.display())
+        print('2 :', twoL.display())
+        print('3 :', threeL.display())
+        print('4 :', fourL.display())
+        print('5 :', fiveL.display())
+        print('6 :', sixL.display())
+        print('7 :', sevenL.display())
+        print('8 :', eightL.display())
+        print('9 :', nightL.display())
 
-        if not zeroLinked.isEmpty() and oneLinked.isEmpty() and twoLinked.isEmpty() and \
-                threeLinked.isEmpty() and fourLinked.isEmpty() and fiveLinked.isEmpty() and \
-                sixLinked.isEmpty() and sevenLinked.isEmpty() and eightLinked.isEmpty() and nightLinked.isEmpty():
+        if not zeroL.isEmpty() and oneL.isEmpty() and twoL.isEmpty() and \
+                threeL.isEmpty() and fourL.isEmpty() and fiveL.isEmpty() and \
+                sixL.isEmpty() and sevenL.isEmpty() and eightL.isEmpty() and nightL.isEmpty():
             state = True
 
-        # return back to linkedlist
-        while not zeroLinked.isEmpty(): linkedList.append(zeroLinked.pop(0).data)
-        while not oneLinked.isEmpty(): linkedList.append(oneLinked.pop(0).data)
-        while not twoLinked.isEmpty(): linkedList.append(twoLinked.pop(0).data)
-        while not threeLinked.isEmpty(): linkedList.append(threeLinked.pop(0).data)
-        while not fourLinked.isEmpty(): linkedList.append(fourLinked.pop(0).data)
-        while not fiveLinked.isEmpty(): linkedList.append(fiveLinked.pop(0).data)
-        while not sixLinked.isEmpty(): linkedList.append(sixLinked.pop(0).data)
-        while not sevenLinked.isEmpty(): linkedList.append(sevenLinked.pop(0).data)
-        while not eightLinked.isEmpty(): linkedList.append(eightLinked.pop(0).data)
-        while not nightLinked.isEmpty(): linkedList.append(nightLinked.pop(0).data)
+        while not zeroL.isEmpty(): linkedList.append(zeroL.pop(0).data)
+        while not oneL.isEmpty(): linkedList.append(oneL.pop(0).data)
+        while not twoL.isEmpty(): linkedList.append(twoL.pop(0).data)
+        while not threeL.isEmpty(): linkedList.append(threeL.pop(0).data)
+        while not fourL.isEmpty(): linkedList.append(fourL.pop(0).data)
+        while not fiveL.isEmpty(): linkedList.append(fiveL.pop(0).data)
+        while not sixL.isEmpty(): linkedList.append(sixL.pop(0).data)
+        while not sevenL.isEmpty(): linkedList.append(sevenL.pop(0).data)
+        while not eightL.isEmpty(): linkedList.append(eightL.pop(0).data)
+        while not nightL.isEmpty(): linkedList.append(nightL.pop(0).data)
 
         if state is True:
             break
         time += 1
     return linkedList, time
-
-
-# 64 8 216 512 27 729 0 1 343 125
 
 inp = [int(i) for i in input('Enter Input : ').split()]
 

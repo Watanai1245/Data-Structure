@@ -36,7 +36,7 @@ class SinglyLinkedList:
         print('2',p.next)
         print('3',p.next.next)
         '''
-        if p.next == self.cursorNode:  # case first [dummy]->[cursor]->None
+        if p.next == self.cursorNode:
             return None
         while p.next.next != self.cursorNode:
             p = p.next
@@ -64,7 +64,7 @@ class SinglyLinkedList:
         newNode = Node(data, self.cursorNode.next)
         self.cursorNode.next = newNode
 
-    def append(self, data):  # normal case insert before cursor
+    def append(self, data):
         self.insertBefore(data)
 
     def deleteLeft(self):
@@ -77,7 +77,7 @@ class SinglyLinkedList:
         prevNode = self.beforeBeforeNode()
         if prevNode is None:
             popNode = None
-            self.head.next = self.cursorNode  # No more to delete
+            self.head.next = self.cursorNode
         else:
             popNode = prevNode.next
             prevNode.next = self.cursorNode
@@ -93,7 +93,7 @@ class SinglyLinkedList:
 
     def shiftLeft(self):
         popNode = self.popLeft()
-        if popNode is not None:  # No more to shift
+        if popNode is not None:
             self.insertAfter(popNode.data)
 
     def shiftRight(self):
@@ -101,8 +101,6 @@ class SinglyLinkedList:
         if popNode is not None:
             self.insertBefore(popNode.data)
 
-
-# I A,I B,I C,I D,I E,I G,L,L,L,L,D
 inp = input('Enter Input : ').split(',')
 
 L = SinglyLinkedList()

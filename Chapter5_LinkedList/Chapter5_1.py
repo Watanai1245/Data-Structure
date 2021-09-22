@@ -67,14 +67,14 @@ class SinglyLinkedList:
 
 inp = input('Enter Input : ').split(',')
 
-linklst = SinglyLinkedList()
+Ll = SinglyLinkedList()
 
 for i in inp[0].split():
-    linklst.append(i)
+    Ll.append(i)
 
-print(linklst)
+print(Ll)
 
 for i in inp[1:]:
     i = i.split(':')
-    linklst.insert(int(i[0]), i[1], 0)
-    print(linklst)
+    Ll.insert(int(i[0]), i[1], 0)
+    print(Ll)
