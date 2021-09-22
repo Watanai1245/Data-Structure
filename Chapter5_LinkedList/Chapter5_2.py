@@ -1,4 +1,3 @@
-### Class ###
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
@@ -71,30 +70,29 @@ class DoublyLinkedList:
         except AttributeError:
             print("Not Found!")
 
-### Main ###
 commanList = input("Enter Input : ").split(',')
 
-doublyLinkedList = DoublyLinkedList()
-for command in commanList:
-    option = command.split()[0]
-    if option == "A":
-        param = command.split()[1]
-        doublyLinkedList.append(param)
+DLL = DoublyLinkedList()
+for i in commanList:
+    A = i.split()[0]
+    if A == "A":
+        p = i.split()[1]
+        DLL.append(p)
 
-    elif option == "Ab":
-        param = command.split()[1]
-        doublyLinkedList.insert(0, param)
+    elif A == "Ab":
+        p = i.split()[1]
+        DLL.insert(0, p)
 
-    elif option == "I":
-        param = command.split()[1]
-        position, data = param.split(':')
-        doublyLinkedList.insert(int(position), data)
-        if int(position) >= 0 and int(position) <= doublyLinkedList.size:
+    elif A == "I":
+        p = i.split()[1]
+        position, data = p.split(':')
+        DLL.insert(int(position), data)
+        if int(position) >= 0 and int(position) <= DLL.size:
             print("index = {} and data = {}".format(position, data))
 
-    elif option == "R":
-        param = command.split()[1]
-        doublyLinkedList.remove(param)
+    elif A == "R":
+        p = i.split()[1]
+        DLL.remove(p)
 
-    print("linked list : {}".format(doublyLinkedList))
-    print("reverse : {}".format(doublyLinkedList.str_reverse()))
+    print("linked list : {}".format(DLL))
+    print("reverse : {}".format(DLL.str_reverse()))

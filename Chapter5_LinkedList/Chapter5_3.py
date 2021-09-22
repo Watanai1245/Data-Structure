@@ -21,7 +21,7 @@ def printList(H):
     print(' '.join(data))
 
 head = None
-def mergeOrderesList(p,q):
+def mergeOrderList(p,q):
     while p is not None:
         sorts(p.data)
         p = p.next
@@ -32,28 +32,27 @@ def mergeOrderesList(p,q):
 
 def sorts(data):
         global head
-        curr = head
-        if curr is None:
+        cur = head
+        if cur is None:
             n = node(data)
             head = n
             return
 
-        if curr.data > data:
+        if cur.data > data:
             n = node(data)
-            n.next = curr
+            n.next = cur
             head = n
             return
 
-        while curr.next is not None:
-            if curr.next.data > data:
+        while cur.next is not None:
+            if cur.next.data > data:
                 break
-            curr = curr.next
+            cur = cur.next
         n = node(data)
-        n.next = curr.next
-        curr.next = n
+        n.next = cur.next
+        cur.next = n
         return
 
-#################### FIX comand ####################   
 L1,L2 = map(str,input("Enter 2 Lists : ").split())
 LL1 = createList(L1.split(','))
 LL2 = createList(L2.split(','))
@@ -61,6 +60,6 @@ print('LL1 : ',end='')
 printList(LL1)
 print('LL2 : ',end='')
 printList(LL2)
-m = mergeOrderesList(LL1,LL2)
+m = mergeOrderList(LL1,LL2)
 print('Merge Result : ',end='')
 printList(m)
