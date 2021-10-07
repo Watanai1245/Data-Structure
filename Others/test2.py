@@ -1,17 +1,14 @@
-# Python program to display the Fibonacci sequence
+num = int(input("Number:"))
 
-def recur_fibo(n):
-   if n <= 1:
-       return n
-   else:
-       return(recur_fibo(n-1) + recur_fibo(n-2))
+flag = False
 
-nterms = 10
+if num > 1:
+    for i in range(2, num):
+        if (num % i) == 0:
+            flag = True
+            break
 
-# check if the number of terms is valid
-if nterms <= 0:
-   print("Plese enter a positive integer")
+if flag:
+    print(num, "is not a prime number")
 else:
-   print("Fibonacci sequence:")
-   for i in range(nterms):
-       print(recur_fibo(i))
+    print(num, "is a prime number")
