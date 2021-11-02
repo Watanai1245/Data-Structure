@@ -31,11 +31,6 @@ class SinglyLinkedList:
 
     def beforeBeforeNode(self):
         p = self.head
-        '''
-        print('1',p)
-        print('2',p.next)
-        print('3',p.next.next)
-        '''
         if p.next == self.cursorNode:
             return None
         while p.next.next != self.cursorNode:

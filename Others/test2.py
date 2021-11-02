@@ -1,39 +1,92 @@
-print("*** String Rotation ***")
-s1 , s2 = input(f"Enter 2 strings : ").split()
+from collections import Counter
 
-def Rotae(s1,s2):
-    l1=[]
-    l1[:0]= s1
-    l2=[]
-    l2[:0]= s2
 
-    size1 = len(l1)
+class LinkedList:
+    def __init__(self, list=None):
+        if list == None:
+            self.word = []
+        else:
+            self.word = list
 
-    nL1 = []
-    nL1.insert(0, l1.pop(size1-1))
-    nL1.extend(l1) 
-    out1 = ""
-    for ele in nL1: 
-        out1 += ele
+    def push(self, i):
+        self.word.append(i)
 
-    l2.append(l2.pop(0))
-    out2 = ""
-    for ele in l2: 
-        out2 += ele 
+    def pop(self):
+        return self.word.pop()
 
-    return out1 , out2
+    def isEmpty(self):
+        return self.word == []
 
-i = 1
-sss1 , sss2 = Rotae(s1,s2)
+    def size(self):
+        return len(self.word)
 
-while(sss1 != s1 or sss2 != s2):
-    if(i <= 5):
-        print(str(i) +" "+ sss1 +" "+ sss2)
-    sss1 , sss2 = Rotae(sss1 , sss2)
-    i = i + 1
+    def reverse(self):
+        newList = []
+        for i in range(len(self.word)):
+            newList.append(self.word.pop())
+        self.word.extend(newList)
 
-if(i == 7 or i == 12 or i == 28 or i == 42  or i == 132):
-    print(" . . . . .")
+    def extend(self, list):
+        self.word.extend(list)
 
-print(str(i) +" "+ sss1 +" "+ sss2)
-print("Total of  " + str(i) + " rounds.")
+    def __str__(self):
+        if not self.isEmpty():
+            out = "Linked data : "
+            for word in self.word:
+                out += str(word)+' '
+            return out
+        return 'Empty'
+
+    def sort(self):
+        newList = []
+        while self.word:
+            minimum = self.word[0]
+            for x in self.word:
+                if x < minimum:
+                    minimum = x
+            newList.append(minimum)
+            self.word.remove(minimum)
+        self.word = newList
+
+
+def findMean(lst):
+    sum = 0
+    for i in lst:
+        sum = sum+int(i)
+    Mid = float(sum/len(lst))
+    print("Mean = %.2f" % Mid)
+
+
+def findmedian(lst):
+    for i in range(0, len(lst)):
+        lst[i] = int(lst[i])
+
+        
+
+    if((len(lst) %2) != 0):
+        q = int((len(lst)+1)/2)
+        print(q)
+        print(lst)
+        medium = lst[q-1]
+        print("Median =",medium)
+    else:
+        x1 = int((len(lst))/2)
+        x2 = int(((len(lst))/2)+1)
+        x = lst[x1]
+        y = lst[x2]
+        medium = (x+y) / 2
+        print("Median =",medium)
+
+
+
+inputlists = [int(e) for e in input('Enter numbers : ').split()]
+lst = LinkedList()
+lst.extend(inputlists)
+print("Output :")
+lst.sort()
+print(lst)
+print("Amount of data =", lst.size())
+lst = [e for e in str(lst).split(' ')]
+findMean(inputlists)
+findmedian(inputlists)
+#print(findmedian(lst).replace("'", ""))
